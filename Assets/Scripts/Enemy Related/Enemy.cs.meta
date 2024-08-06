@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 7a198e3f413ca004bb963739abe14150
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - BloodDropEffect: {instanceID: 0}
+  - ExploasionEffect: {instanceID: 0}
+  - CoinPrefab: {instanceID: 0}
+  - lootTable: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

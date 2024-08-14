@@ -1,10 +1,11 @@
 using System;
+using UnityEngine;
 
 [Serializable]
 public class GameStats
 {
     public int RecordScore;
-    public int TotalCoins;
+    public float TotalCoins;
 
     public GameStats() 
     { 

@@ -16,8 +16,12 @@ public class StatsMenu : MonoBehaviour
 
     public void ResetGameStats()
     {
-        SaveManager.Instance.SaveGameStats(new GameStats());
+        GameManager.Instance.playerStats = new PlayerStats();
+        SaveManager.Instance.SavePlayerStats(GameManager.Instance.playerStats);
+
         GameManager.Instance.gameStats = new GameStats();
+        SaveManager.Instance.SaveGameStats(GameManager.Instance.gameStats);
+
         SetStats();
     }
 

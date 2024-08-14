@@ -13,6 +13,11 @@ public class SettingsMenu : MonoBehaviour
 
     private void OnEnable()
     {
+        InitializedFields();
+    }
+
+    private void InitializedFields()
+    {
         joystickType.value = GameManager.Instance.gameSettings.joystickType switch
         {
             JoystickType.Floating => 0,
@@ -24,19 +29,39 @@ public class SettingsMenu : MonoBehaviour
         worldScale.text = GameManager.Instance.gameSettings.WorldScale.ToString();
     }
 
-    public void ConfirmSettingsChange()
+    public void SetJoystickType(int joystickType)
     {
-        GameManager.Instance.gameSettings.joystickType = joystickType.value switch
+        GameManager.Instance.gameSettings.joystickType = joystickType switch
         {
             0 => JoystickType.Floating,
             1 => JoystickType.Dynamic,
             _ => JoystickType.Dynamic
         };
-        GameManager.Instance.gameSettings.JoystickSpeed = float.Parse(joystickSpeed.text);
-        GameManager.Instance.gameSettings.SpawnRate = float.Parse(spawnRate.text);
-        GameManager.Instance.gameSettings.WorldScale = float.Parse(worldScale.text);
         GameManager.Instance.UpdateGameSettings();
-
-        //ShowMenu(MenuState.Main);
     }
+
+    public void SetJoystickSpeed(string joystickSpeed)
+    {
+        GameManager.Instance.gameSettings.JoystickSpeed = float.Parse(joystickSpeed);
+        GameManager.Instance.UpdateGameSettings();
+    }
+
+    public void SetSpawnRate(string spawnRate)
+    {
+        GameManager.Instance.gameSettings.SpawnRate = float.Parse(spawnRate);
+        GameManager.Instance.UpdateGameSettings();
+    }
+
+    public void SetWorldScale(string worldScale)
+    {
+        GameManager.Instance.gameSettings.WorldScale = float.Parse(worldScale);
+        GameManager.Instance.UpdateGameSettings();
+    }
+
+    public void ResetGameSettings()
+    {
+        GameManager.Instance.ResetGameSettings();
+        InitializedFields();
+    }
+
 }

@@ -6,65 +6,59 @@ using UnityEngine;
 
 public class UpgradesMenu : MonoBehaviour
 {
-    public enum Upgrades
-    {
-        Strength,
-        Defense,
-        Health,
-        HealRate
-    }
+    // fields of upgrades
+    [SerializeField] private TextMeshProUGUI strength;
+    [SerializeField] private TextMeshProUGUI defense;
+    [SerializeField] private TextMeshProUGUI health;
+    [SerializeField] private TextMeshProUGUI healRate;
 
-    [SerializeField] private TMP_InputField strength;
-    [SerializeField] private TMP_InputField defense;
-    [SerializeField] private TMP_InputField health;
-    [SerializeField] private TMP_InputField healRate;
 
-    [SerializeField] private TextMeshProUGUI coinsAmount;
+    [SerializeField] private TextMeshProUGUI _coinsAmount;
+
+    [SerializeField] private float _upgradePrice;
+    [SerializeField] private float _upgradeValue;
 
     private void OnEnable()
     {
-        strength.text = GameManager.Instance.playerStats.Strength.ToString();
-        defense.text = GameManager.Instance.playerStats.Defense.ToString();
-        health.text = GameManager.Instance.playerStats.MaxHealth.ToString();
-        healRate.text = GameManager.Instance.playerStats.HealRate.ToString();
+        strength.text = GameManager.Instance.playerStats.GetStat("Strength").ToString();
+        defense.text = GameManager.Instance.playerStats.GetStat("Defense").ToString();
+        health.text = GameManager.Instance.playerStats.GetStat("MaxHealth").ToString();
+        healRate.text = GameManager.Instance.playerStats.GetStat("HealRate").ToString();
 
-        coinsAmount.text = GameManager.Instance.gameStats.TotalCoins.ToString();
+        _coinsAmount.text = GameManager.Instance.gameStats.TotalCoins.ToString();
     }
 
-    public void Upgrade(int fieldValue)
+    public void Upgrade(string stateName)
     {
-        float newValue = 1; 
-        switch ((Upgrades)fieldValue)
+        GameManager.Instance.playerStats.CoinMaxValue = 20;
+        if (CanUpgrade(_upgradePrice))
         {
-            case Upgrades.Strength:
-                newValue += float.Parse(strength.text);
-                strength.text = newValue.ToString();
-                break;
-            case Upgrades.Defense:
-                newValue += float.Parse(defense.text);
-                defense.text = newValue.ToString(); 
-                break;
-            case Upgrades.Health:
-                newValue += float.Parse(health.text);
-                health.text = newValue.ToString();
-                break;
-            case Upgrades.HealRate:
-                newValue += float.Parse(healRate.text);
-                healRate.text = newValue.ToString();
-                break;
+            bool result = GameManager.Instance.playerStats.UpgradeStat(stateName, _upgradeValue);
+
+            if (result)
+            {
+                GameManager.Instance.gameStats.TotalCoins -= _upgradePrice;
+                SaveManager.Instance.SaveGameStats(GameManager.Instance.gameStats); // should change it to an event
+                UpdateText();
+            }
         }
-        SaveUpgrades();
     }
 
-    private void SaveUpgrades()
+
+    private bool CanUpgrade(float value)
     {
-        GameManager.Instance.playerStats.Strength = float.Parse(strength.text);
-        GameManager.Instance.playerStats.Defense = float.Parse(defense.text);
-        GameManager.Instance.playerStats.MaxHealth = float.Parse(health.text);
-        GameManager.Instance.playerStats.HealRate = float.Parse(healRate.text);
+        return (value <= GameManager.Instance.gameStats.TotalCoins);
+    }
+
+    private void UpdateText()
+    {
+        strength.text = GameManager.Instance.playerStats.GetStat("Strength").ToString();
+        defense.text = GameManager.Instance.playerStats.GetStat("Defense").ToString();
+        health.text = GameManager.Instance.playerStats.GetStat("MaxHealth").ToString();
+        healRate.text = GameManager.Instance.playerStats.GetStat("HealRate").ToString();
+
+        _coinsAmount.text = GameManager.Instance.gameStats.TotalCoins.ToString();
 
         GameManager.Instance.UpdatePlayerStats();
     }
-
-
 }

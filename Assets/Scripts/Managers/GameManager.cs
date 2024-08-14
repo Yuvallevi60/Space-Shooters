@@ -9,9 +9,9 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+    public PlayerStats playerStats;
     public GameSettings gameSettings;
     public GameStats gameStats;
-    public PlayerStats playerStats;
     public CurrentPlayStats currentPlayStats;
 
     public bool isPlaying;
@@ -122,6 +122,13 @@ public class GameManager : MonoBehaviour
     public void UpdateGameSettings()
     {
         SaveManager.Instance.SaveGameSettings(gameSettings);
+    }
+
+    // return the game settings to defualt
+    public void ResetGameSettings()
+    {
+        gameSettings = new GameSettings();
+        UpdateGameSettings();
     }
 
     // after buying an upgrade

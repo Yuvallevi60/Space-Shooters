@@ -21,8 +21,8 @@ public class Player : MonoBehaviour, IDamageable
 
     void Start()
     {
-        defense = GameManager.Instance.playerStats.Defense;
-        health = maxHealth = GameManager.Instance.playerStats.MaxHealth;
+        defense = GameManager.Instance.playerStats.GetStat("Defense");
+        health = maxHealth = GameManager.Instance.playerStats.GetStat("MaxHealth");
         healthBar.SetMaxHealth(maxHealth);
         magnetDuration = GameManager.Instance.playerStats.MagnetDuration;
 

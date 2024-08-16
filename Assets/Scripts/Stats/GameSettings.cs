@@ -21,4 +21,16 @@ public class GameSettings
 
         WorldScale = 1;
     }
+
+    public override string ToString()
+    {
+        string str = string.Empty;
+
+        str += "joystickType: " + joystickType.ToString() + "\t";
+        str += "JoystickSpeed: " + JoystickSpeed.ToString() + "\t";
+        str += "SpawnRate: " + SpawnRate.ToString() + "\t";
+        str += "WorldScale: " + WorldScale.ToString();
+
+        return str;
+    }
 }

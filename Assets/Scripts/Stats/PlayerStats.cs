@@ -46,7 +46,16 @@ public class PlayerStats
         };
     }
 
-    public float GetStat(string name)
+    public UpgradableStat GetStat(string name)
+    {
+        var stat = upgradableStats.FirstOrDefault(s => s.Name == name);
+        if (stat != null)
+            return stat;
+        else
+            throw new ArgumentException($"Stat with name {name} not found.");
+    }
+
+    public float GetStatValue(string name)
     {
         var stat = upgradableStats.FirstOrDefault(s => s.Name == name);
         if (stat != null)
@@ -54,6 +63,7 @@ public class PlayerStats
         else
             throw new ArgumentException($"Stat with name {name} not found.");
     }
+
 
     public bool UpgradeStat(string name, float value)
     {

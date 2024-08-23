@@ -13,7 +13,7 @@ public class ShotController : MonoBehaviour, IDamageDealer
 
     void Start()
     {
-        strngth *= GameManager.Instance.playerStats.GetStat("Strength");
+        strngth *= GameManager.Instance.playerStats.GetStatValue("Strength");
     }
 
     void Update()

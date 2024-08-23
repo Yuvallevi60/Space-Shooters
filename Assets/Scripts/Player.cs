@@ -17,12 +17,11 @@ public class Player : MonoBehaviour, IDamageable
 
     private bool isMagnetActive;
     private float magnetDuration; // Duration of the magnet effect
-    [SerializeField] private float magnetStrength = 10f; // How fast the items are pulled towards the player
 
     void Start()
     {
-        defense = GameManager.Instance.playerStats.GetStat("Defense");
-        health = maxHealth = GameManager.Instance.playerStats.GetStat("MaxHealth");
+        defense = GameManager.Instance.playerStats.GetStatValue("Defense");
+        health = maxHealth = GameManager.Instance.playerStats.GetStatValue("MaxHealth");
         healthBar.SetMaxHealth(maxHealth);
         magnetDuration = GameManager.Instance.playerStats.MagnetDuration;
 
@@ -59,29 +58,22 @@ public class Player : MonoBehaviour, IDamageable
     public void ActivateMagnet()
     {
         if (!isMagnetActive)
-        {
             isMagnetActive = true;
-            StartCoroutine(MagnetCoroutine());
-        }
         else
-        {
             StopCoroutine(MagnetCoroutine());
-            StartCoroutine(MagnetCoroutine());
-        }
+        StartCoroutine(MagnetCoroutine());
     }
 
     private IEnumerator MagnetCoroutine()
     {
-        float timer = 0;
+        float magnetTimer = 0;
 
-        while (timer < magnetDuration)
+        while (magnetTimer < magnetDuration)
         {
-            timer += Time.deltaTime;
-            foreach (GameObject drop in GameObject.FindGameObjectsWithTag("Coin"))
-            {
-                Vector2 direction = (transform.position - drop.transform.position).normalized;
-                drop.transform.Translate(magnetStrength * Time.deltaTime * direction);
-            }
+            magnetTimer += Time.deltaTime;
+            foreach (GameObject coin in GameObject.FindGameObjectsWithTag("Coin"))
+                coin.GetComponent<Coin>().PullToPlayer();
+            
             yield return null;
         }
 

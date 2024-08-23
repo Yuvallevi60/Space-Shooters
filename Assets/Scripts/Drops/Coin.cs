@@ -1,11 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class Coin : MonoBehaviour
 {
     [SerializeField] private AudioClip pickupSound;
     [SerializeField] private float destroyDelay = 1.0f;
+    [SerializeField] private float pullingSpeed = 10f; // How fast the coin are pulled towards the player
+
+    private UnityEngine.Transform playerTransform;
+    private bool isPulled = false;
+
+    
+
+    private void Update()
+    {
+        if (isPulled)
+        {
+            Vector2 direction = (playerTransform.position - transform.position).normalized;
+            transform.Translate(pullingSpeed * Time.deltaTime * direction);
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -22,5 +38,11 @@ public class Coin : MonoBehaviour
             GetComponent<SpriteRenderer>().enabled = false;
             Destroy(gameObject, destroyDelay);
         }
+    }
+
+    public void PullToPlayer()
+    {
+        playerTransform = GameObject.Find("Player").transform;
+        isPulled = true;
     }
 }

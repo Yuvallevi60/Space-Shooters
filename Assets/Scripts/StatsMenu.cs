@@ -5,8 +5,11 @@ using UnityEngine;
 
 public class StatsMenu : MonoBehaviour
 {
+    [SerializeField] private TextMeshProUGUI gamesPlayed;
     [SerializeField] private TextMeshProUGUI recordScore;
     [SerializeField] private TextMeshProUGUI totalCoins;
+    [SerializeField] private TextMeshProUGUI spendedCoins;
+    [SerializeField] private TextMeshProUGUI enemiesKilled;
 
 
     private void OnEnable()
@@ -27,7 +30,10 @@ public class StatsMenu : MonoBehaviour
 
     private void SetStats()
     {
+        gamesPlayed.text = $"Games Played: {GameManager.Instance.gameStats.GamesPlayed}";
         recordScore.text = $"Best Score: {GameManager.Instance.gameStats.RecordScore}";
         totalCoins.text = $"Total Coins: {GameManager.Instance.gameStats.TotalCoins}";
+        spendedCoins.text = $"Spended Coins: {GameManager.Instance.gameStats.SpendedCoins}";
+        enemiesKilled.text = $"Enemies Killed: {GameManager.Instance.gameStats.TotalEnemiesKilled}";
     }
 }

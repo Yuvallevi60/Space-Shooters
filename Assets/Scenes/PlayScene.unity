@@ -17597,8 +17597,8 @@ MonoBehaviour:
   health: 0
   healthBar: {fileID: 578638660}
   defense: 0
+  AutoHealPerSec: 0
   Shield: {fileID: 1855514571}
-  magnetStrength: 10
 --- !u!61 &1545718231
 BoxCollider2D:
   m_ObjectHideFlags: 0

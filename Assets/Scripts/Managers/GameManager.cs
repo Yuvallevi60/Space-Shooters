@@ -104,6 +104,8 @@ public class GameManager : MonoBehaviour
     // after end of a game the method update the GameStats 
     private void UpdateGameStats()
     {
+        gameStats.GamesPlayed++;
+
         if (currentPlayStats.Score > gameStats.RecordScore)
         {
             gameStats.RecordScore = currentPlayStats.Score;
@@ -115,6 +117,7 @@ public class GameManager : MonoBehaviour
         }
 
         gameStats.TotalCoins += currentPlayStats.Coins;
+        gameStats.TotalEnemiesKilled += currentPlayStats.EnemiesKilled;
 
         SaveManager.Instance.SaveGameStats(gameStats); 
     }

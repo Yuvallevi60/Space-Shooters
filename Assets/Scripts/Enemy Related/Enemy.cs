@@ -53,6 +53,7 @@ public class Enemy : MonoBehaviour, IDamageable, IDamageDealer
 
     protected void Death(bool isDrop)
     {
+        GameManager.Instance.currentPlayStats.EnemiesKilled++;
         EventManager.Instance.ScoreChanged(scorePoints); // Add score when chicken is killed              
         if (isDrop)
             HandleDrops();

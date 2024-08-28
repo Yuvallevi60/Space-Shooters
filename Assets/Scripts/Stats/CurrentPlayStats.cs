@@ -6,4 +6,5 @@ public class CurrentPlayStats
 {
     public int Score;
     public int Coins;
+    public int EnemiesKilled;
 }

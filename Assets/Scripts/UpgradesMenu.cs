@@ -73,6 +73,7 @@ public class UpgradesMenu : MonoBehaviour
         if (result) 
         {
             GameManager.Instance.gameStats.TotalCoins -= _upgradePrice;
+            GameManager.Instance.gameStats.SpendedCoins += _upgradePrice;
             SaveManager.Instance.SaveGameStats(GameManager.Instance.gameStats); // should change it to an event
 
             _coinsAmount.text = GameManager.Instance.gameStats.TotalCoins.ToString();
